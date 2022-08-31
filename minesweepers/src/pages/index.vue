@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { BlockState } from '~/types'
-const WIDTH = 10
-const HEIGHT = 10
+
 
 const numberColors = [
   'text-transparent',
@@ -26,6 +25,9 @@ const directions = [
   [-1, -1]
 ]
 
+const WIDTH = 10
+const HEIGHT = 10
+
 const state = ref(
   Array.from({ length: HEIGHT }, (_, y) =>
     Array.from({ length: WIDTH }, (_, x): BlockState => {
@@ -38,6 +40,8 @@ const state = ref(
     })
   )
 )
+
+console.log(state.value);
 
 let mineGenerated = false
 const dev = false
@@ -132,7 +136,9 @@ function checkGameState() {
 
 <template>
   <div>
-    minesweepers
+    <span fs-12 color-red>
+      minesweepers22222
+    </span>
     <div p5 w-full overflow-auto>
       <div
         v-for="(row, y) in state"
@@ -171,3 +177,5 @@ function checkGameState() {
     </div>
   </div>
 </template>
+
+
