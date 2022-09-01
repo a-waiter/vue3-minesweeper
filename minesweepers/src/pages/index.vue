@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { BlockState } from '~/types'
 
-
 const numberColors = [
   'text-transparent',
   'text-blue-500',
@@ -41,7 +40,7 @@ const state = ref(
   )
 )
 
-console.log(state.value);
+console.log(state.value)
 
 let mineGenerated = false
 const dev = false
@@ -112,7 +111,10 @@ function onClick(block: BlockState) {
   }
 
   block.revealed = true
-  if (block.mine) alert('BOOOOM!')
+  if (block.mine) {
+    revealAllMine()
+    alert('BOOOOM!')
+  }
 
   expendZero(block)
 }
@@ -122,7 +124,14 @@ function onRightClick(block: BlockState) {
   block.flagged = !block.flagged
 }
 
-watchEffect(checkGameState)
+function revealAllMine() {
+  state.value.forEach((row, y) => {
+    row.forEach((block, x) => {
+      if (block.mine) block.revealed = true
+    })
+  })
+}
+
 function checkGameState() {
   if (!mineGenerated) return
   const blocks = state.value.flat()
@@ -132,13 +141,13 @@ function checkGameState() {
     else alert('You win!')
   }
 }
+
+watchEffect(checkGameState)
 </script>
 
 <template>
   <div>
-    <span fs-12 color-red>
-      minesweepers22222
-    </span>
+    <span fs-12 color-red> minesweepers </span>
     <div p5 w-full overflow-auto>
       <div
         v-for="(row, y) in state"
@@ -157,7 +166,7 @@ function checkGameState() {
           justify-center
           min-w-8
           min-h-8
-          m="1px"
+          m="3px"
           border="0.5 gray-400/10"
           :class="getBlockClass(block)"
           @click="onClick(block)"
@@ -177,5 +186,3 @@ function checkGameState() {
     </div>
   </div>
 </template>
-
-
